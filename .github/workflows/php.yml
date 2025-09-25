@@ -1,0 +1,36 @@
+name: PHP Pipeline
+
+on:
+  push:   # Se ejecuta cada vez que haces git push
+    branches: [ "main", "master" ]
+  pull_request:
+    branches: [ "main", "master" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout del repositorio
+      uses: actions/checkout@v4
+
+    - name: Instalar PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: '8.2'   # Puedes cambiar la versión si usas otra
+
+    - name: Instalar dependencias con Composer
+      run: |
+        if [ -f composer.json ]; then
+          composer install --prefer-dist --no-progress
+        else
+          echo "No hay composer.json, se omite instalación"
+        fi
+
+    - name: Ejecutar pruebas en PHP
+      run: |
+        if [ -d tests ]; then
+          ./vendor/bin/phpunit --testdox
+        else
+          echo "No hay carpeta de tests, se omite"
+        fi
