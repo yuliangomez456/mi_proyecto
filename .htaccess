@@ -1,5 +1,13 @@
+# Página inicial en views/
 DirectoryIndex /views/index.php
 
 RewriteEngine On
+RewriteBase /
+
+# Redirigir todo a la carpeta views
 RewriteRule ^$ views/index.php [L]
-RewriteRule (.*) views/$1 [L]
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
+
+# Quitar la extensión .php en las URLs
+RewriteRule ^([a-zA-Z0-9_-]+)/?$ views/$1.php [L]
