@@ -1,39 +1,18 @@
-name: Ì∫Ä Deploy to InfinityFree
+name: Deploy to InfinityFree
 
 on:
   push:
     branches:
-      - main   # c√°mbialo a master si tu repo usa master
+      - master   
 
 jobs:
   ftp-deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Ì≥• Checkout del repositorio
+      - name: Checkout del repositorio
         uses: actions/checkout@v3
 
-      - name: Ì∫Ä Deploy por FTP
-        uses: SamKirkland/FTP-Deploy-Action@4.3.3
-        with:
-          server: ftpupload.net
-          username: ${{ secrets.FTP_USER }}
-          password: ${{ secrets.FTP_PASS }}
-          server-dir: /htdocs/
-name: Ì∫Ä Deploy to InfinityFree
-
-on:
-  push:
-    branches:
-      - master   # c√°mbialo a main si tu repo usa main
-
-jobs:
-  ftp-deploy:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Ì≥• Checkout del repositorio
-        uses: actions/checkout@v3
-
-      - name: Ì∫Ä Deploy por FTP
+      - name: Deploy por FTP
         uses: SamKirkland/FTP-Deploy-Action@4.3.3
         with:
           server: ftpupload.net
