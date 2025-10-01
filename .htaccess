@@ -1,1 +1,28 @@
-DirectoryIndex view/index.php
+RewriteEngine On
+
+# Redirigir la raíz del dominio a public/view/
+RewriteRule ^$ public/view/index.php [L]
+
+# Redirigir todo a la carpeta public/view/
+RewriteCond %{REQUEST_URI} !^/public/view/
+RewriteRule ^(.*)$ public/view/$1 [L,QSA]
+
+# Configurar página por defecto
+DirectoryIndex index.php
+
+# Permitir acceso a archivos CSS, JS, imágenes directamente
+<FilesMatch "\.(css|js|png|jpg|jpeg|gif|ico|svg|woff|woff2|ttf|eot)$">
+    Order Allow,Deny
+    Allow from all
+</FilesMatch>
+
+# Prevenir acceso a archivos sensibles
+<Files ~ "\.(env|json|config.js|md|gitignore|gitattributes|lock)$">
+    Order allow,deny
+    Deny from all
+</Files>
+
+<FilesMatch "\.(htaccess|htpasswd|ini|log|sh|inc|bak|php)$">
+    Order Allow,Deny
+    Allow from all
+</FilesMatch>
