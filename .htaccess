@@ -4,10 +4,16 @@ DirectoryIndex /views/index.php
 RewriteEngine On
 RewriteBase /
 
-# Redirigir todo a la carpeta views
+# Redirigir la raíz al index.php dentro de views
 RewriteRule ^$ views/index.php [L]
+
+# Evitar conflictos con archivos y carpetas reales
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME} !-f
 
-# Quitar la extensión .php en las URLs
+# Quitar la extensión .php de las URLs
 RewriteRule ^([a-zA-Z0-9_-]+)/?$ views/$1.php [L]
+
+# Redirigir automáticamente las URLs con .php a la versión sin extensión
+RewriteCond %{THE_REQUEST} \s/+([^.]+)\.php[?\s] [NC]
+RewriteRule ^ %1 [R=301,L]
